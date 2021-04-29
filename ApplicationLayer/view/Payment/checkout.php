@@ -119,9 +119,9 @@ if($_SESSION['status'] == 'success'){
    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
      <div class="collapse navbar-collapse" id="navbarColor01">
        <div class="navbar-nav" style="padding-top:0px;">
-         <a class="nav-item nav-link" href="productList.php">HOME</a>
-         <a class="nav-item nav-link" href="customerProfile.php"><?php echo strtoupper($name)."'S ACCOUNT"?></a>
-         <a class="nav-item nav-link" href="orderHistory.php" style="margin-left:-5px">ORDER HISTORY</a>
+         <a class="nav-item nav-link" href="../Customer/productList.php">HOME</a>
+         <a class="nav-item nav-link" href="../Customer/customerProfile.php"><?php echo strtoupper($name)."'S ACCOUNT"?></a>
+         <a class="nav-item nav-link" href="../Customer/orderHistory.php" style="margin-left:-5px">ORDER HISTORY</a>
          <!-- <a class="nav-item nav-link" href="customerProfileEdit.php" style="margin-left:0px;margin-right:-5px">EDIT PROFILE</a> -->
          <form method="post" class="form-inline">
          <button type="submit" id="logout" class="logout" name="logout" style="background:transparent;color:white;border:none;width:0px;outline:none;"
@@ -132,7 +132,7 @@ if($_SESSION['status'] == 'success'){
    </nav>
 
    <nav class="navbar navbar-light" style="height:auto;background-color: #f5f5f5">
-     <a href="productList.php" class="navbar-brand text-primary h1">Flash</a>
+     <a href="../Customer/productList.php" class="navbar-brand text-primary h1">Flash</a>
      <h5>Welcome To Flash Delivery</h5>
        <a class="navbar-brand" href="../../../ApplicationLayer/view/Customer/cart.php">
        <i class="fa fa-shopping-cart fa-2x unique-color-dark" aria-hidden="true" style="color:#17141F"></i>
