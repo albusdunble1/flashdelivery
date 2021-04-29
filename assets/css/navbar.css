@@ -1,0 +1,24 @@
+/* Coding Arif */
+
+.navbar-nav {
+    float:none;
+    margin:0 auto;
+    display: block;
+    text-align: center;
+}
+
+.navbar-nav a {
+  display: inline-block;
+  float:none;
+}
+
+nav {
+  height: 0px;
+}
+
+.container {
+  margin-top: 100px;
+  /* background-color: #F2F3F4; */
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
