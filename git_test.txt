@@ -4,3 +4,4 @@ This file is created to test github commands.
 - Test 2
 - Test 3
 - Test 5
+- Test 6
