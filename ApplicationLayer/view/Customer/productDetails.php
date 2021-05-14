@@ -6,7 +6,21 @@ $ProductID = $_GET['prodid'];
 
 $product = new productController();
 $data = $product->viewProductDetails($ProductID);
+$data2 = $product->viewAllReviews($ProductID);
 
+$data3 = $product->checkReviewHistory($ProductID);
+$reviewcount = $data2->rowCount();
+if($reviewcount <= 0){
+  $errmsg = "No reviews have been made yet.";
+}
+
+
+$data4 = $product->checkPurchaseHistory($ProductID);
+
+
+if(isset($_POST['submit'])){
+  $product->addProductReview($ProductID);
+}
 
  ?>
 
@@ -19,6 +33,29 @@ $data = $product->viewProductDetails($ProductID);
          <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css">
          <script src="https://kit.fontawesome.com/e40306d6a0.js" crossorigin="anonymous"></script>
          <title>Product Details</title>
+
+         <style>
+            .hide-review{
+              display:none;
+            }
+
+            .add-review {
+                margin: 2rem;
+                margin-bottom: 5rem;
+            }
+
+            .product-reviews{
+              margin: 2rem;
+            }
+
+            select#rating {
+                width: 10%;
+            }
+
+            .card {
+                margin-bottom: 1rem;
+            }
+         </style>
       </head>
 
 
@@ -151,12 +188,87 @@ $data = $product->viewProductDetails($ProductID);
                             <!-- <button id="addCart" type="submit" name="add" class="btn btn-primary">Add to cart</button></td> -->
                         </div>
                     </div>
+                    </form>
                </div>
                <h4>Description</h4>
                <span id="pDesc"><?=$row['ProductDescription']?></span>
             </div>
          </div>
          <?php } ?>
+
+
+
+
+        <!-- PRODUCT REVIEW -->
+
+         <div class="container">
+              <div class="row add-review <?php echo $data3>0 || $data4<1? 'hide-review': ''?>">
+                <div class="col-12">
+                <h2>Add A Review</h2>
+                <br>
+                <form action="" method="POST">
+                  <div class="form-group row">
+                    <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+                    <div class="col-md-10">
+                      <select id="rating" class="form-control" name="rating" required>
+                          <option value="1" selected>1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="comment" class="col-sm-2 col-form-label">Comment</label>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                    </div>
+                  </div>
+                  <input type="submit" class="btn btn-success" name="submit" value="Submit Review">
+                </form>
+
+                </div>
+              </div>
+
+
+              <div class="row product-reviews">
+                <div class="col-12">
+                  <h2>Product Reviews (<?=$reviewcount?>)</h2>
+                  <br>
+                  <?php 
+                  if (isset($errmsg)){
+                    echo "<h4>$errmsg</h4>";
+                  }
+                ?>
+                </div>
+
+                <?php foreach($data2 as $row){ ?>
+
+                <div class="col-12">
+
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"><?= $row['CustName']?></h5>
+                      <h6 class="card-subtitle mb-2 text-muted">Rating: <?= $row['ReviewRating']?>/5</h6>
+                      <p class="card-text"><?= $row['ReviewComment']?></p>
+                    </div>
+                  </div>
+                </div>
+
+                <?php } ?>
+              </div>
+
+
+
+              </div>
+         </div>
+
+
+
+
+
+
 
 
                <!-- Modal -->

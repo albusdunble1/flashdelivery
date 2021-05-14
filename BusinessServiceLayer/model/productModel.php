@@ -3,7 +3,7 @@ require_once '../../../libs/database.php';
 
 class productModel{
     // public variable Wei Sheng
-    public $prodid,$prodname,$prodprice,$prodcategory,$proddescription,$prodstatus,$prodimage, $prodsortsales,$spid,
+    public $prodid,$prodname,$prodprice,$prodcategory,$proddescription,$prodstatus,$prodimage, $prodsortsales, $prodrating, $prodcomment,$spid,
 
     // public variable ARIF
     $CustID, $OrderDate, $OrderAddress, $DeliveryStatus, $total,
@@ -61,6 +61,43 @@ class productModel{
 
 
     // ============ CUSTOMER FUNCTIONS ============ //
+
+    // retrieve all reviews for a specific product
+    function viewAllProdReviews(){
+        $sql = "select * from reviews as r INNER JOIN customer as c ON r.CustID=c.CustID where r.ProductID='$this->ProductID'";
+
+        // "SELECT c.name,, b.date, b.roll FROM a INNER JOIN b ON a.id=b.id;"
+
+        return DB::run($sql);
+    }
+
+    // insert product review into reviews table - Wei Sheng
+    function addReview(){
+        $sql = "insert into reviews(CustID, ProductID, ReviewComment, ReviewRating) values(:custid, :prodid, :reviewcomment, :reviewrating)";
+        $args = [':custid'=>$this->CustID, ':prodid'=>$this->ProductID, ':reviewcomment'=>$this->prodcomment, ':reviewrating'=>$this->prodrating];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    // check if customer product review already exist in reviews table
+    function checkReview(){
+        $sql = "select * from reviews where ProductID=:ProductID and CustID=:CustID";
+        $args = [':ProductID'=>$this->ProductID, ':CustID'=>$this->CustID];
+        $stmt = DB::run($sql, $args);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+
+    // check if customer product purchase exist in order and order_product table
+    function checkPurchase(){
+        $sql = "select * from orders as o, order_product as op where op.ProductID='$this->ProductID' and o.CustID='$this->CustID' and o.OrderID=op.OrderID";
+        $stmt = DB::run($sql);
+        $count = $stmt->rowCount();
+        return $count;
+    }
+    
+
 
 
     // retrieve all products from the product table (used to calculate the number of pages required) - Wei Sheng
