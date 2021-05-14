@@ -3,7 +3,7 @@ require_once '../../../libs/database.php';
 
 class productModel{
     // public variable Wei Sheng
-    public $prodid,$prodname,$prodprice,$prodcategory,$proddescription,$prodstatus,$prodimage,$spid,
+    public $prodid,$prodname,$prodprice,$prodcategory,$proddescription,$prodstatus,$prodimage, $prodsortsales,$spid,
 
     // public variable ARIF
     $CustID, $OrderDate, $OrderAddress, $DeliveryStatus, $total,
@@ -65,31 +65,77 @@ class productModel{
 
     // retrieve all products from the product table (used to calculate the number of pages required) - Wei Sheng
     function viewProdList(){
-        if(isset($this->prodcategory)){
+        // if(isset($this->prodcategory)){
+        //     $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory'";
+        // }else{
+        //     $sql = "select * from product where ProductStatus='Available'";
+        // }
+
+
+        if(isset($this->prodcategory) && isset($this->prodsortsales)){
+            $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' ORDER BY ProductSales $this->prodsortsales" ;
+        }else if(isset($this->prodcategory)){
             $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory'";
+        }else if(isset($this->prodsortsales)){
+            $sql = "select * from product where ProductStatus='Available' ORDER BY ProductSales $this->prodsortsales";
         }else{
             $sql = "select * from product where ProductStatus='Available'";
         }
+
+
+
+
+
+
         return DB::run($sql);
     }
 
     // retrieve products that match the searched term from the product table - Wei Sheng
     function viewSearchProdList($term){
-        if(isset($this->prodcategory)){
-            $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and ProductName like '%$term%' ";
+        // if(isset($this->prodcategory)){
+        //     $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and ProductName like '%$term%' ";
+        // }else{
+        //     $sql = "select * from product where ProductStatus='Available' and  ProductName like '%$term%'";
+        // }
+
+
+        if(isset($this->prodcategory) && isset($this->prodsortsales)){
+            $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and ProductName like '%$term%' ORDER BY ProductSales $this->prodsortsales" ;
+        }else if(isset($this->prodcategory)){
+            $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and  ProductName like '%$term%'";
+        }else if(isset($this->prodsortsales)){
+            $sql = "select * from product where ProductStatus='Available' and  ProductName like '%$term%' ORDER BY ProductSales $this->prodsortsales";
         }else{
             $sql = "select * from product where ProductStatus='Available' and  ProductName like '%$term%'";
         }
+
+        
+
+
         return DB::run($sql);
     }
 
     // retrieve a specific number of products from the product table according to the page number - Wei Sheng
     function viewProdListPage($offset, $number_of_records, $term){
-        if(isset($this->prodcategory)){
-            $sql =  "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and ProductName like '%$term%' limit ". $offset. ", ". $number_of_records;
+        // if(isset($this->prodcategory)){
+        //     $sql =  "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and ProductName like '%$term%' limit ". $offset. ", ". $number_of_records;
+        // }else{
+        //     $sql =  "select * from product where ProductStatus='Available' and  ProductName like '%$term%' limit ". $offset. ", ". $number_of_records;
+        // }
+
+
+
+        if(isset($this->prodcategory) && isset($this->prodsortsales)){
+            $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and ProductName like '%$term%' ORDER BY ProductSales $this->prodsortsales limit ". $offset. ", ". $number_of_records ;
+        }else if(isset($this->prodcategory)){
+            $sql = "select * from product where ProductStatus='Available' and  ProductCategory='$this->prodcategory' and  ProductName like '%$term%' limit ". $offset. ", ". $number_of_records;
+        }else if(isset($this->prodsortsales)){
+            $sql = "select * from product where ProductStatus='Available' and  ProductName like '%$term%' ORDER BY ProductSales $this->prodsortsales limit ". $offset. ", ". $number_of_records;
         }else{
-            $sql =  "select * from product where ProductStatus='Available' and  ProductName like '%$term%' limit ". $offset. ", ". $number_of_records;
+            $sql = "select * from product where ProductStatus='Available' and  ProductName like '%$term%' limit ". $offset. ", ". $number_of_records;
         }
+
+
 
         return DB::run($sql);
     }
