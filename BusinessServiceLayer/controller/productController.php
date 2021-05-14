@@ -82,6 +82,11 @@ class productController{
         if(isset($_GET['category'])){
             $product->prodcategory = $_GET['category'];
         }
+
+        if(isset($_GET['sales'])){
+            $product->prodsortsales = $_GET['sales'];
+        }
+
         return $product->viewProdList();
     }
 
@@ -92,6 +97,10 @@ class productController{
             $product->prodcategory = $_GET['category'];
 
         }
+        if(isset($_GET['sales'])){
+            $product->prodsortsales = $_GET['sales'];
+        }
+
         return $product->viewSearchProdList($term);
     }
 
@@ -101,6 +110,10 @@ class productController{
         if(isset($_GET['category'])){
             $product->prodcategory = $_GET['category'];
         }
+        if(isset($_GET['sales'])){
+            $product->prodsortsales = $_GET['sales'];
+        }
+        
         return $product -> viewProdListPage($offset, $number_of_records, $term);
     }
 

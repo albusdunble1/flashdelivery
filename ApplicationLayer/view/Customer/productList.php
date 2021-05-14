@@ -106,6 +106,12 @@ $pages_needed = ceil($total / $number_of_records);
                     <li><a href="productList.php?category=pet">Pet</a></li>
                     <li><a href="productList.php?category=medical">Medical</a></li>
                 </ul>
+
+                <h3>Sort by</h3>
+                <ul>
+                    <li><a href="productList.php?sales=desc<?php echo isset($_GET['category'])? '&category='. $_GET['category']: ''?><?php echo isset($_GET['term'])? '&term='. $_GET['term']: ''?>">Product Sales (Descending)</a></li>
+                    <li><a href="productList.php?sales=asc<?php echo isset($_GET['category'])? '&category='. $_GET['category']: ''?><?php echo isset($_GET['term'])? '&term='. $_GET['term']: ''?>">Product Sales (Ascending)</a></li>
+                </ul>
             </div>
             <div class="col-sm-10 main-content">
                 <div class="row">
@@ -115,7 +121,7 @@ $pages_needed = ceil($total / $number_of_records);
                 }
                 foreach($data as $row){
                     $prodid = $row['ProductID'];
-                    echo "<div class='col-sm-3'><div class='cust product'><a href='productDetails.php?prodid=$prodid'><img class='product-img' src='../../../uploads/". $row['ProductImage'] ."'><div class='product-bottom'><h4>".$row['ProductName'] ."</h4><p class='product-price'>RM". $row['ProductPrice'] ."</p></div></a></div></div>";
+                    echo "<div class='col-sm-3'><div class='cust product'><a href='productDetails.php?prodid=$prodid'><img class='product-img' src='../../../uploads/". $row['ProductImage'] ."'><div class='product-bottom'><h4>".$row['ProductName'] ."</h4><p class='product-price'>RM". $row['ProductPrice'] ."</p><p>" .$row['ProductSales'] . " Sold</p></div></a></div></div>";
                 }
 
             ?>
