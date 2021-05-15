@@ -3,7 +3,7 @@ require_once '../../../libs/database.php';
 
 class productModel{
     // public variable Wei Sheng
-    public $prodid,$prodname,$prodprice,$prodcategory,$proddescription,$prodstatus,$prodimage, $prodsortsales, $prodrating, $prodcomment,$spid,
+    public $prodid,$prodname,$prodprice,$prodcategory,$proddescription,$prodstatus,$prodimage, $prodsortsales, $prodrating, $prodcomment,$spid, $ReviewDate,
 
     // public variable ARIF
     $CustID, $OrderDate, $OrderAddress, $DeliveryStatus, $total,
@@ -64,7 +64,7 @@ class productModel{
 
     // retrieve all reviews for a specific product
     function viewAllProdReviews(){
-        $sql = "select * from reviews as r INNER JOIN customer as c ON r.CustID=c.CustID where r.ProductID='$this->ProductID'";
+        $sql = "select * from reviews as r INNER JOIN customer as c ON r.CustID=c.CustID where r.ProductID='$this->ProductID' ORDER BY ReviewID DESC";
 
         // "SELECT c.name,, b.date, b.roll FROM a INNER JOIN b ON a.id=b.id;"
 
@@ -73,8 +73,8 @@ class productModel{
 
     // insert product review into reviews table - Wei Sheng
     function addReview(){
-        $sql = "insert into reviews(CustID, ProductID, ReviewComment, ReviewRating) values(:custid, :prodid, :reviewcomment, :reviewrating)";
-        $args = [':custid'=>$this->CustID, ':prodid'=>$this->ProductID, ':reviewcomment'=>$this->prodcomment, ':reviewrating'=>$this->prodrating];
+        $sql = "insert into reviews(CustID, ProductID, ReviewComment, ReviewRating, ReviewDate) values(:custid, :prodid, :reviewcomment, :reviewrating, :reviewdate)";
+        $args = [':custid'=>$this->CustID, ':prodid'=>$this->ProductID, ':reviewcomment'=>$this->prodcomment, ':reviewrating'=>$this->prodrating, ':reviewdate'=>$this->ReviewDate];
         $stmt = DB::run($sql, $args);
         $count = $stmt->rowCount();
         return $count;

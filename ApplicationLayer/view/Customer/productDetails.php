@@ -8,19 +8,37 @@ $product = new productController();
 $data = $product->viewProductDetails($ProductID);
 $data2 = $product->viewAllReviews($ProductID);
 
-$data3 = $product->checkReviewHistory($ProductID);
 $reviewcount = $data2->rowCount();
 if($reviewcount <= 0){
   $errmsg = "No reviews have been made yet.";
 }
 
-
+$data3 = $product->checkReviewHistory($ProductID);
 $data4 = $product->checkPurchaseHistory($ProductID);
+
+$data5  = $product->viewAllReviews($ProductID);
+
+$counter = 0;
+$total = 0;
+
+
+foreach($data5 as $row){
+  $counter += 1;
+  $total += $row['ReviewRating'];
+}
+
+if($counter > 0){
+  $averagerating = round($total/$counter);
+}else{
+  $averagerating = 0;
+}
 
 
 if(isset($_POST['submit'])){
   $product->addProductReview($ProductID);
 }
+// date_default_timezone_set('Asia/Singapore');
+// echo date("Y-m-d");
 
  ?>
 
@@ -54,6 +72,35 @@ if(isset($_POST['submit'])){
 
             .card {
                 margin-bottom: 1rem;
+            }
+
+            .checked {  
+            color : #ffbc00;  
+            font-size : 20px;  
+            }  
+
+            .unchecked {  
+                font-size : 20px;  
+            }  
+
+            .product-reviews span {
+                font-size: 15px;
+            }
+
+            h5.card-title {
+                font-size: 1.4em;
+            }
+
+            .product-reviews p.card-text {
+                font-size: 1.2em;
+            }
+
+            .card {
+                border-radius: 15px;
+            }
+
+            form label {
+                font-size: 20px!important;
             }
          </style>
       </head>
@@ -156,7 +203,12 @@ if(isset($_POST['submit'])){
                         </div>
 
                         <div class="clear-float">
-                          <div id="stars" style="margin-top:5px;margin-bottom:15px">
+                            <!-- To display checked/unchecked star rating icons -->  
+                            <span class = "fa fa-star <?php echo $averagerating>0? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>1? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>2? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>3? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>4? 'checked': 'unchecked'?>"></span>  
                         </div>
 
                         <div class="clear-float">
@@ -187,11 +239,15 @@ if(isset($_POST['submit'])){
                             <button id="addCart" type="submit" name="add" class="btn btn-primary" data-toggle="modal" data-target="#cartModal">Add to cart</button></td>
                             <!-- <button id="addCart" type="submit" name="add" class="btn btn-primary">Add to cart</button></td> -->
                         </div>
+
+                        <h4>Description</h4>
+                        <div class="clear-float">
+                              <span id="pDesc"><?=$row['ProductDescription']?></span>
+                        </div>
                     </div>
                     </form>
                </div>
-               <h4>Description</h4>
-               <span id="pDesc"><?=$row['ProductDescription']?></span>
+
             </div>
          </div>
          <?php } ?>
@@ -250,7 +306,14 @@ if(isset($_POST['submit'])){
                   <div class="card">
                     <div class="card-body">
                       <h5 class="card-title"><?= $row['CustName']?></h5>
-                      <h6 class="card-subtitle mb-2 text-muted">Rating: <?= $row['ReviewRating']?>/5</h6>
+                      <p><b><?=date("j F Y", strtotime($row['ReviewDate']))?></b></p>
+                      <h6 class="card-subtitle mb-2 text-muted">                            
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>0? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>1? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>2? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>3? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>4? 'checked': 'unchecked'?>"></span>  
+                      </h6>
                       <p class="card-text"><?= $row['ReviewComment']?></p>
                     </div>
                   </div>

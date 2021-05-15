@@ -83,8 +83,10 @@ class productController{
         $product->prodcomment = $_POST['comment'];
         $product->CustID = $_SESSION['CustID'];
         $product->ProductID = $ProductID;
+        date_default_timezone_set('Asia/Singapore');
+        $product->ReviewDate = date("Y-m-d");
         if($product->addReview() > 0){
-            $message = "Success Insert!";
+            $message = "Added Review!";
 		echo "<script type='text/javascript'>alert('$message');
 		window.location = 'productDetails.php?prodid=$ProductID';</script>";
         }
