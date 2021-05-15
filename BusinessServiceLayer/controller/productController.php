@@ -76,6 +76,48 @@ class productController{
 
     // ============ CUSTOMER FUNCTIONS ============ //
 
+    // add a new product review 
+    function addProductReview($ProductID){
+        $product = new productModel();
+        $product->prodrating = $_POST['rating'];
+        $product->prodcomment = $_POST['comment'];
+        $product->CustID = $_SESSION['CustID'];
+        $product->ProductID = $ProductID;
+        date_default_timezone_set('Asia/Singapore');
+        $product->ReviewDate = date("Y-m-d");
+        if($product->addReview() > 0){
+            $message = "Added Review!";
+		echo "<script type='text/javascript'>alert('$message');
+		window.location = 'productDetails.php?prodid=$ProductID';</script>";
+        }
+    }
+
+    // check if customer has already made a review on a specific product
+    function checkReviewHistory($ProductID){
+        $product = new productModel();
+        $product->ProductID = $ProductID;
+        $product->CustID = $_SESSION['CustID'];
+        return $product->checkReview();
+    }
+
+    // check if customer has purchased the product 
+    function checkPurchaseHistory($ProductID){
+        $product = new productModel();
+        $product->ProductID = $ProductID;
+        $product->CustID = $_SESSION['CustID'];
+        return $product->checkPurchase();
+    }
+
+    // view all product reviews from customers
+    function viewAllReviews($ProductID){
+        $product = new productModel();
+
+        $product->ProductID = $ProductID;
+
+        return $product->viewAllProdReviews();
+    }
+
+
     // view all products (used to calculate the number of pages required) - Wei Sheng
     function viewProductList(){
         $product = new productModel();

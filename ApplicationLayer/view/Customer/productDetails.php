@@ -6,7 +6,39 @@ $ProductID = $_GET['prodid'];
 
 $product = new productController();
 $data = $product->viewProductDetails($ProductID);
+$data2 = $product->viewAllReviews($ProductID);
 
+$reviewcount = $data2->rowCount();
+if($reviewcount <= 0){
+  $errmsg = "No reviews have been made yet.";
+}
+
+$data3 = $product->checkReviewHistory($ProductID);
+$data4 = $product->checkPurchaseHistory($ProductID);
+
+$data5  = $product->viewAllReviews($ProductID);
+
+$counter = 0;
+$total = 0;
+
+
+foreach($data5 as $row){
+  $counter += 1;
+  $total += $row['ReviewRating'];
+}
+
+if($counter > 0){
+  $averagerating = round($total/$counter);
+}else{
+  $averagerating = 0;
+}
+
+
+if(isset($_POST['submit'])){
+  $product->addProductReview($ProductID);
+}
+// date_default_timezone_set('Asia/Singapore');
+// echo date("Y-m-d");
 
  ?>
 
@@ -19,6 +51,58 @@ $data = $product->viewProductDetails($ProductID);
          <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css">
          <script src="https://kit.fontawesome.com/e40306d6a0.js" crossorigin="anonymous"></script>
          <title>Product Details</title>
+
+         <style>
+            .hide-review{
+              display:none;
+            }
+
+            .add-review {
+                margin: 2rem;
+                margin-bottom: 5rem;
+            }
+
+            .product-reviews{
+              margin: 2rem;
+            }
+
+            select#rating {
+                width: 10%;
+            }
+
+            .card {
+                margin-bottom: 1rem;
+            }
+
+            .checked {  
+            color : #ffbc00;  
+            font-size : 20px;  
+            }  
+
+            .unchecked {  
+                font-size : 20px;  
+            }  
+
+            .product-reviews span {
+                font-size: 15px;
+            }
+
+            h5.card-title {
+                font-size: 1.4em;
+            }
+
+            .product-reviews p.card-text {
+                font-size: 1.2em;
+            }
+
+            .card {
+                border-radius: 15px;
+            }
+
+            form label {
+                font-size: 20px!important;
+            }
+         </style>
       </head>
 
 
@@ -119,7 +203,12 @@ $data = $product->viewProductDetails($ProductID);
                         </div>
 
                         <div class="clear-float">
-                          <div id="stars" style="margin-top:5px;margin-bottom:15px">
+                            <!-- To display checked/unchecked star rating icons -->  
+                            <span class = "fa fa-star <?php echo $averagerating>0? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>1? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>2? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>3? 'checked': 'unchecked'?>"></span>  
+                            <span class = "fa fa-star <?php echo $averagerating>4? 'checked': 'unchecked'?>"></span>  
                         </div>
 
                         <div class="clear-float">
@@ -150,13 +239,99 @@ $data = $product->viewProductDetails($ProductID);
                             <button id="addCart" type="submit" name="add" class="btn btn-primary" data-toggle="modal" data-target="#cartModal">Add to cart</button></td>
                             <!-- <button id="addCart" type="submit" name="add" class="btn btn-primary">Add to cart</button></td> -->
                         </div>
+
+                        <h4>Description</h4>
+                        <div class="clear-float">
+                              <span id="pDesc"><?=$row['ProductDescription']?></span>
+                        </div>
                     </div>
+                    </form>
                </div>
-               <h4>Description</h4>
-               <span id="pDesc"><?=$row['ProductDescription']?></span>
+
             </div>
          </div>
          <?php } ?>
+
+
+
+
+        <!-- PRODUCT REVIEW -->
+
+         <div class="container">
+              <div class="row add-review <?php echo $data3>0 || $data4<1? 'hide-review': ''?>">
+                <div class="col-12">
+                <h2>Add A Review</h2>
+                <br>
+                <form action="" method="POST">
+                  <div class="form-group row">
+                    <label for="rating" class="col-sm-2 col-form-label">Rating</label>
+                    <div class="col-md-10">
+                      <select id="rating" class="form-control" name="rating" required>
+                          <option value="1" selected>1</option>
+                          <option value="2">2</option>
+                          <option value="3">3</option>
+                          <option value="4">4</option>
+                          <option value="5">5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label for="comment" class="col-sm-2 col-form-label">Comment</label>
+                    <div class="col-sm-10">
+                      <textarea class="form-control" id="comment" name="comment" rows="3" required></textarea>
+                    </div>
+                  </div>
+                  <input type="submit" class="btn btn-success" name="submit" value="Submit Review">
+                </form>
+
+                </div>
+              </div>
+
+
+              <div class="row product-reviews">
+                <div class="col-12">
+                  <h2>Product Reviews (<?=$reviewcount?>)</h2>
+                  <br>
+                  <?php 
+                  if (isset($errmsg)){
+                    echo "<h4>$errmsg</h4>";
+                  }
+                ?>
+                </div>
+
+                <?php foreach($data2 as $row){ ?>
+
+                <div class="col-12">
+
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title"><?= $row['CustName']?></h5>
+                      <p><b><?=date("j F Y", strtotime($row['ReviewDate']))?></b></p>
+                      <h6 class="card-subtitle mb-2 text-muted">                            
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>0? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>1? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>2? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>3? 'checked': 'unchecked'?>"></span>  
+                        <span class = "fa fa-star <?php echo $row['ReviewRating']>4? 'checked': 'unchecked'?>"></span>  
+                      </h6>
+                      <p class="card-text"><?= $row['ReviewComment']?></p>
+                    </div>
+                  </div>
+                </div>
+
+                <?php } ?>
+              </div>
+
+
+
+              </div>
+         </div>
+
+
+
+
+
+
 
 
                <!-- Modal -->
