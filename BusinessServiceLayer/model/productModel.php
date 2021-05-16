@@ -175,7 +175,7 @@ class productModel{
     // get all order_product details from order_product table based on OrderID
     // from orders table and OrderProductID from order_product table - ARIF
     function getOrderID(){
-        $OrderProductID = $this->orderproductid[$this->j];
+        $OrderProductID = $this->orderproductid[$this->j];    
 
         $sql = "SELECT * FROM order_product INNER JOIN orders ON order_product.OrderID = orders.OrderID
         WHERE order_product.OrderProductID = '{$OrderProductID}'";

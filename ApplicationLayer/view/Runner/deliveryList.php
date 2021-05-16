@@ -22,7 +22,7 @@ foreach($data as $j => $value) {
   $orderproductid[] = $value['OrderProductID'];
 
   // get orderid, item quantity from order_product table
-  $result = $product->getOrderID($orderproductid,$j);
+  $result = $product->getOrderID($orderproductid,$j);     
   $id = $result->fetch();
   $orderid[] = $id[1];
   $quantity[] = $id[3];
@@ -75,10 +75,10 @@ for($p = 0; $p<count($opID); $p++){
   $pending = $product->viewMyPendingDelivery($opID,$p);
   $count = $pending->fetch();
   if($count[0] != ''){
-  $total[] = $count[0];
+  $totals[] = $count[0];
   }
 }
-  $value = count($total);
+  $value = count($totals);
 } else {
   $value = $values;
 }
@@ -169,6 +169,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                             <tr class="header">
                             <th width="2%">No</th>
                             <th width="15%">Order Product ID</th>
+                            <th width="15%">Order ID</th>
                             <th width="20%">Customer Name</th>
                             <th width="30%">Pickup Address</th>
                             <th width="30%">Delivery Address</th>
@@ -183,6 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                                    echo "<tr id='order-list'>"
                                     . "<td>".$i."</td>"
                                            . "<td>" .$orderproductid[$x]."</td>"
+                                           . "<td>" .$orderid[$x]."</td>"
                                            . "<td>". $customerName[$x]. "</td>"
                                            . "<td>". $pickupAddress[$x]. "</td>"
                                            . "<td>". $deliveryAddress[$x]. "</td>"

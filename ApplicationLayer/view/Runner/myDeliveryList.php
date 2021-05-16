@@ -133,6 +133,7 @@ if(isset($_POST['delivered'])){
                             <tr>
                             <th width="2%">No</th>
                             <th width="15%">Order Product ID</th>
+                            <th width="15%">Order ID</th>
                             <th width="20%">Customer Name</th>
                             <th width="30%">Pickup Address</th>
                             <th width="30%">Delivery Address</th>
@@ -150,6 +151,7 @@ if(isset($_POST['delivered'])){
                                     . "<td>".$i."</td>"
 
                                            . "<td id='orderproductid".$x."'>" .$orderproductid[$x]."</td>"
+                                           . "<td>".$orderid[$x]."</td>"
                                            . "<td>".$customerName[$x]."</td>"
                                            . "<td>".$pickupAddress[$x]."</td>"
                                            . "<td>".$deliveryAddress[$x]."</td>"

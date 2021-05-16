@@ -182,9 +182,9 @@ class productController{
     }
 
     // get all OrderID based on OrderProductID - ARIF
-    function getOrderID($orderproductid,$j){
+    function getOrderID($orderproductid,$j){           
         $product = new productModel();
-        $product->orderproductid = $orderproductid;
+        $product->orderproductid = $orderproductid;           
         $product->j = $j;
         return $product->getOrderID();
     }
