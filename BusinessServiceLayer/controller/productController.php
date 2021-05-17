@@ -73,6 +73,18 @@ class productController{
         }
     }
 
+    // promote a specific product - Wei Sheng
+    function promoteProduct(){
+        $product = new productModel();
+        $product->prodid = $_POST['prodid'];
+        $product->spid = $_SESSION['SpID'];
+        if($product->promoteProd()){
+            $message = "Success Promote!";
+        echo "<script type='text/javascript'>alert('$message');
+        window.location = 'listProduct.php';</script>";
+        }
+    }
+
 
     // ============ CUSTOMER FUNCTIONS ============ //
 
