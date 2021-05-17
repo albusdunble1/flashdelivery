@@ -62,6 +62,14 @@ class productModel{
 
     // ============ CUSTOMER FUNCTIONS ============ //
 
+    // retrieve all promoted products
+    function viewPromoted(){
+        $sql = "select * from product where ProductStatus='Available' and ProductPromotion='1'";
+
+        return DB::run($sql);
+    }
+
+
     // retrieve all reviews for a specific product
     function viewAllProdReviews(){
         $sql = "select * from reviews as r INNER JOIN customer as c ON r.CustID=c.CustID where r.ProductID='$this->ProductID' ORDER BY ReviewID DESC";

@@ -76,6 +76,14 @@ class productController{
 
     // ============ CUSTOMER FUNCTIONS ============ //
 
+    // view all promoted products
+    function viewPromotedProducts(){
+        $product = new productModel();
+
+        return $product->viewPromoted();
+    }
+
+
     // add a new product review 
     function addProductReview($ProductID){
         $product = new productModel();
