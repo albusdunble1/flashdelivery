@@ -57,10 +57,32 @@ class productModel{
         return DB::run($sql,$args);
     }
 
+    // promote a specific product from the product table - Wei Sheng
+    function promoteProd(){
+        $this->removeExistingPromotion();
+        $sql = "update product set ProductPromotion='1' where ProductID=:prodid";
+        $args = [':prodid'=>$this->prodid];
+        return DB::run($sql,$args);
+    }
+
+    function removeExistingPromotion(){
+        $sql = "update product set ProductPromotion='0' where ProductPromotion='1' and SpID='$this->spid'";
+        
+        return DB::run($sql);
+    }
+
 
 
 
     // ============ CUSTOMER FUNCTIONS ============ //
+
+    // retrieve all promoted products
+    function viewPromoted(){
+        $sql = "select * from product where ProductStatus='Available' and ProductPromotion='1'";
+
+        return DB::run($sql);
+    }
+
 
     // retrieve all reviews for a specific product
     function viewAllProdReviews(){

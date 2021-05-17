@@ -11,6 +11,10 @@ if (isset($_POST['delete'])) {
     $product->deleteProduct();
 }
 
+if (isset($_POST['promote'])) {
+    $product->promoteProduct();
+}
+
 
 
 if (isset($_GET['pageno'])) {
@@ -40,6 +44,17 @@ $pages_needed = ceil($total / $number_of_records);
     <title><?= $_SESSION['SpName']?> Product List</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <link rel="stylesheet" href="../../../assets/css/main.css">
+    <style>
+        .promotion-status {
+            background: #46d000;
+            color: white;
+            font-weight: bold;
+            border-radius: 20px;
+            padding: 0.1rem 0.5rem;
+            display: inline-block;
+            font-size: 12px;
+        }
+    </style>
 </head>
 
 <body>
@@ -86,22 +101,33 @@ $pages_needed = ceil($total / $number_of_records);
             <?php
             foreach ($data as $row) {
                 $prodid = $row['ProductID'];
+                if ($row['ProductPromotion'] == 1){
+                    $status = 'Promoted';
+                }else{
+                    $status = '';
+                }
+
                 echo "
                     <div class='col-sm-3'>
                         <div class='sp product'>
                             <a href='viewProduct.php?prodid=$prodid'>
                                 <img class='product-img' src='../../../uploads/".$row['ProductImage'] . "'>
                                 <div class='product-bottom'>
-                                    <h4>" . $row['ProductName'] . "</h4>
-                                    <p class='product-price'>RM" . $row['ProductPrice'] . "</p>
+                                    <h4>" . $row['ProductName'] . "</h4> ";
+                                    
+                                    echo $status=='Promoted'?"<span class='promotion-status'>". $status."</span>": "";
+
+
+                                    echo " <p class='product-price'>RM" . $row['ProductPrice'] . "</p>
                                     <span class='product-status'>" .$row['ProductStatus']."</span>";
 
 
             ?>
-                <form method="POST" onsubmit="return confirm('Are you sure to delete?');">
+                <form method="POST" onsubmit="return confirm('Are you sure?');">
                     <a class="btn btn-success" href='editProduct.php?prodid=<?= $prodid ?>'>Edit</a>
                     <input type="hidden" name="prodid" value="<?= $prodid ?>">
                     <input class="btn btn-danger" type="submit" name="delete" value="Delete">
+                    <?php echo $status!='Promoted'? "<input class='btn btn-primary' type='submit' name='promote' value='Promote'>":""?>
                 </form>
 
 

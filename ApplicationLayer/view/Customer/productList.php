@@ -41,6 +41,10 @@ if (isset($_GET['term'])) {
     }
 }
 
+// promoted products data
+$data2 = $product->viewPromotedProducts();
+
+
 $pages_needed = ceil($total / $number_of_records);
 
 ?>
@@ -51,7 +55,45 @@ $pages_needed = ceil($total / $number_of_records);
    <link rel="stylesheet" href="../../../assets/css/main.css">
    <link rel="stylesheet" href="../../../assets/css/navbar.css">
    <link rel="stylesheet" href="../../../assets/css/bootstrap.min.css">
+   <link rel="stylesheet" type="text/css" href="../../../assets/css/slick.css"/>
+   <link rel="stylesheet" type="text/css" href="../../../assets/css/slick-theme.css"/>
    <script src="https://kit.fontawesome.com/e40306d6a0.js" crossorigin="anonymous"></script>
+   <style>
+    .slick-dots{
+        bottom: -40px;
+    }
+
+    .slick-initialized .slick-slide {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        margin-top: 10px;
+    }
+
+    .slick-dotted.slick-slider {
+        margin-bottom: 3rem;
+    }
+
+    .slick-prev:before, .slick-next:before{
+        color: black;
+    }
+
+    .product{
+        position: relative;
+    }
+
+    .slick-slider .product-bottom h4:before {
+        content: '';
+        display: block;
+        background: url(../../../assets/img/promoted-product.png) no-repeat 0 0;
+        background-size: 100%;
+        position: absolute;
+        width: 36%;
+        height: 100%;
+        top: -219px;
+        left: -1px;
+    }
+
+   </style>
 
 </head>
 <body>
@@ -88,9 +130,26 @@ $pages_needed = ceil($total / $number_of_records);
 
 
     <div class="container" style="margin-top:30px">
+        <!-- promoted section -->
+
+        <h2>Promoted Products</h2>
+        <div class="row">
+            <div class="col-sm-12 promoted-products">
+            <?php
+                // if (isset($errmsg)){
+                //     echo "<h3>$errmsg</h3>";
+                // }
+                foreach($data2 as $row){
+                    $prodid = $row['ProductID'];
+                    echo "<div class='cust product'><a href='productDetails.php?prodid=$prodid'><img class='product-img' src='../../../uploads/". $row['ProductImage'] ."'><div class='product-bottom'><h4>".$row['ProductName'] ."</h4><p class='product-price'>RM". $row['ProductPrice'] ."</p><p>" .$row['ProductSales'] . " Sold</p></div></a></div>";
+                }
+
+            ?>
+            </div>
+        </div>
 
 
-
+        <!-- all products section -->
         <h2><?php echo isset($_GET['category'])? $_GET['category']: '';?> Product List</h2>
         <div class="row">
             <div class="col-sm-2 sidebar">
@@ -165,6 +224,18 @@ $pages_needed = ceil($total / $number_of_records);
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../../../assets/js/slick.min.js"></script>
     <script src="../../../assets/js/main.js"></script>
+    <script>
+        $('.promoted-products').slick({
+            infinite: true,
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            arrows: true,
+            autoplay: true,
+            autoplaySpeed: 2000,
+            dots: true
+        });
+    </script>
 </body>
 </html>
