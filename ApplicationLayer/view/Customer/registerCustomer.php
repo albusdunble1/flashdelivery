@@ -24,11 +24,11 @@ if(isset($_POST['regs-submit']))
   <form action="" method="POST" enctype="multipart/form-data">
 	<div class="loginbox">
 		<h1>REGISTER CUSTOMER</h1>
-		
+
     <div class="containar">
 			<div class="imagefill">
 				<img class="imageborder" src="../../../uploads/white.jpg" id="image" name="custImage" alt="white">
-				
+
 					<div class="buttonSelect"><button type="button" name="button" onclick="document.getElementById('fileName').click()">Select File
 					</button>
 					<input type="file" name="photoFile" id="fileName" style="display: none">
@@ -37,10 +37,10 @@ if(isset($_POST['regs-submit']))
                   <input type='button' id="uploadFile" style="display:none" onclick="return readURL();">
 				</div>
 
-				
+
 			</div>
 
-      
+
 			<div class="fillbox1">
 				<input type="text" placeholder="Name" name="CustName" required></div>
 
@@ -48,7 +48,9 @@ if(isset($_POST['regs-submit']))
 
 			<div class="fillbox1"><input type="text" placeholder="No. Phone" name="CustPhoneNo" required></div>
 
-			<div class="fillbox1"><input type="Password" placeholder="Password" name="CustPassword" required></div>
+			<!-- Password strength added - Faiz-->
+			<div class="fillbox1"><input type="Password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="CustPassword"
+				title="Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character." required></div>
       </div>
 
       <div class="link-register">
@@ -61,11 +63,11 @@ if(isset($_POST['regs-submit']))
 
 
 
-	
+
 	</form>
 	</div>
 <script>
-  
+
   var fileName,input;
   var input = document.getElementById( 'fileName' );
   input.addEventListener( 'change', showFileName );

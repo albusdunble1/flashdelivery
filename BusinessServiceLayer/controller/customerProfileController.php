@@ -2,7 +2,7 @@
 <?php
 // Author : Firdaus
 // controller for customer to edit and display customer details
-require_once '../../../libs/Controller.php'; 
+require_once '../../../libs/Controller.php';
 require_once '../../../BusinessServiceLayer/model/customerProfileModel.php';
 
 class customerProfileController extends Controller
@@ -66,11 +66,17 @@ class customerProfileController extends Controller
         $data['name_err'] = 'Please enter name';
       }
 
-      // Validate Password
+      // Validate Password using preg_match function -Faiz
+      $uppercase = preg_match('@[A-Z]@', $data['password']);
+			$lowercase = preg_match('@[a-z]@', $data['password']);
+			$number    = preg_match('@[0-9]@', $data['password']);
+			$specialChars = preg_match('@[^\w]@', $data['password']);
+
       if (empty($data['password'])) {
-        $data['password_err'] = 'Pleae enter password';
-      } elseif (strlen($data['password']) < 6) {
-        $data['password_err'] = 'Password must be at least 6 characters';
+        $data['password_err'] = 'Please enter password';
+      } elseif (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($data['password']) < 8) {
+
+        $data['password_err'] = 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character.';
       }
 
       // Validate Phone Number Password
