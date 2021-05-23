@@ -83,6 +83,7 @@ $pages_needed = ceil($total / $number_of_records);
                     <th scope="col">Item Bought</th>
                     <th scope="col">Quantity</th>
                     <th scope="col">Order Date</th>
+                    <th scope="col">Order Delivery Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -96,6 +97,7 @@ $pages_needed = ceil($total / $number_of_records);
                             <td>'.$row['ProductName'].'</td>
                             <td>'.$row['quantity'].'</td>
                             <td>'.$row['OrderDate'].'</td>
+                            <td>'.$row['DeliveryStatus'].'</td>
                         </tr>
                     ';
                     $i++;
