@@ -79,6 +79,7 @@ $pages_needed = ceil($total / $number_of_records);
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">No</th>
+                    <th scope="col">Order ID</th>
                     <th scope="col">Customer Name</th>
                     <th scope="col">Item Bought</th>
                     <th scope="col">Quantity</th>
@@ -93,6 +94,7 @@ $pages_needed = ceil($total / $number_of_records);
                     echo '
                         <tr>
                             <th scope="row">'. $i .'</th>
+                            <td>'.$row['OrderID'].'</td>
                             <td>'.$row['CustName'].'</td>
                             <td>'.$row['ProductName'].'</td>
                             <td>'.$row['quantity'].'</td>
