@@ -15,7 +15,9 @@ class orderModel{
 
     // retrieve specific number of customer that bought the service provider's products from the database based on the page number - Wei Sheng
     function viewBuyListPage($offset, $number_of_records){
+
         $sql = "SELECT p.ProductName, o.OrderDate, op.quantity, c.CustName, op.DeliveryStatus, op.OrderID FROM product AS p, order_product AS op, customer AS c, orders as o WHERE op.ProductID = p.ProductID AND op.OrderID = o.OrderID AND o.CustID = c.CustID AND p.SpID = '$this->spid'  ORDER BY op.OrderProductID DESC limit ". $offset. ", ". $number_of_records ;
+
         return DB::run($sql);
     }
     
