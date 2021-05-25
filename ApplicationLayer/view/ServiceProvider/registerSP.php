@@ -23,11 +23,11 @@ if(isset($_POST['regs-submit']))
   <form action="" method="POST" enctype="multipart/form-data">
 	<div class="loginboxrunner">
 		<h1>REGISTER SERVICE PROVIDER</h1>
-		
+
     <div class="containar">
 			<div class="imagefill" rowspan="3">
 				<img class="imageborder" src="../../../uploads/white.jpg" id="image" name="SpImage" alt="white" width="70" height="75" border="2" overflow:hidden;>
-				
+
 					<div class="buttonSelect"><button type="button" name="button" onclick="document.getElementById('fileName').click()">Select File
 					</button>
 					<input type="file" name="photoFile" id="fileName" style="display: none">
@@ -36,7 +36,7 @@ if(isset($_POST['regs-submit']))
                   <input type='button' id="uploadFile" style="display:none" onclick="return readURL();">
 				</div>
 
-				
+
 			</div>
 
 			<div class="fillbox1">
@@ -46,7 +46,10 @@ if(isset($_POST['regs-submit']))
 
 			<div class="fillbox1"><input type="text" placeholder="No. Phone" name="SpPhoneNo" required></div>
 
-			<div class="fillbox1"><input type="Password" placeholder="Password" name="SpPassword" required></div>
+			<!-- Password strength added - Faiz-->
+			<div class="fillbox1"><input type="Password" placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" name="SpPassword"
+				 title="Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character." required>
+			 </div>
 
       <div class="fillbox1"><input type="text" placeholder="Register ID" name="SpRegID" required></div>
 
@@ -59,7 +62,7 @@ if(isset($_POST['regs-submit']))
                     <option value="Food">Food</option>
                     <option value="Pet">Pet</option>
                     <option value="Medical">Medical</option>
-                    
+
                 </select></div>
 
       <div class="link-register">
@@ -71,11 +74,11 @@ if(isset($_POST['regs-submit']))
 
 
 
-	
+
 	</form>
 	</div>
 <script>
-  
+
   var fileName,input;
   var input = document.getElementById( 'fileName' );
   input.addEventListener( 'change', showFileName );
