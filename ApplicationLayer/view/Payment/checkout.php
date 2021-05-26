@@ -13,6 +13,7 @@ $payment = new paymentController();
 
 $data = $customer->viewCustomer($CustID);
 
+//payment method
 // echo $_SESSION['status'];
 
 
