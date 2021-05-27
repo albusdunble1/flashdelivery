@@ -244,10 +244,13 @@ if($_SESSION['status'] == 'success'){
              </div>
            </div>
 
-           <!-- <div class="mb-3">
-             <label for="address2">Address 2 <span class="text-muted">(Optional)</span></label>
-             <input type="text" class="form-control" id="address2" placeholder="Apartment or suite">
-           </div> -->
+           <div class="mb-3">
+             <label for="phone">Phone</label>
+             <input type="number" class="form-control" name="OrderAddress" id="OrderAddress" placeholder="1234 " value="" required>
+             <div class="invalid-feedback">
+               Please enter your Phone Number.
+             </div>
+           </div>
 
            <hr class="mb-4">
            <hr class="mb-4">
@@ -255,23 +258,38 @@ if($_SESSION['status'] == 'success'){
            <h4 class="mb-3">Payment</h4>
 
            <div class="d-block my-3">
-             <!-- <div class="custom-control custom-radio">
-               <input id="credit" name="paymentMethod" type="radio" class="custom-control-input" value="Credit card" checked required>
-               <label class="custom-control-label" for="credit">Credit card</label>
-             </div>
              <div class="custom-control custom-radio">
-               <input id="debit" name="paymentMethod" type="radio" class="custom-control-input" value="Debit card" required>
-               <label class="custom-control-label" for="debit">Debit card</label>
-             </div> -->
+               <input id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
+               <label class="custom-control-label" for="cod">Cash On Delivery</label>
+             </div>
+           </div>
+           
+          <div class="d-block my-3">
+             <div class="custom-control custom-radio">
+               <input id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
+               <label class="custom-control-label" for="paypal">Online Banking</label>
+             </div>
+           </div>
+           
+           <div class="d-block my-3">
+             <div class="custom-control custom-radio">
+               <input id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
+               <label class="custom-control-label" for="paypal">Credit Card</label>
+             </div>
+           </div>
+           
+           <div class="d-block my-3">
              <div class="custom-control custom-radio">
                <input id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
                <label class="custom-control-label" for="paypal">Paypal</label>
              </div>
            </div>
            <hr class="mb-4">
+           
            <div id="buttonCheckout">
                <button name="add" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
             </div>
+
            <?php } ?>
          </form>
        </div>
