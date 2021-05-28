@@ -168,12 +168,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                           <thead class="black white-text thead-info">
                             <tr class="header">
                             <th width="2%">No</th>
-                            <th width="15%">Order Product ID</th>
+                            
                             <th width="15%">Order ID</th>
                             <th width="20%">Customer Name</th>
                             <th width="30%">Pickup Address</th>
                             <th width="30%">Delivery Address</th>
-                            <th width="15%">Items(quantity)</th>
+                            <th width="25%">Items(quantity)</th>
                             <th width="30%">Action</th>
                             </tr>
                           </thead>
@@ -183,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST'){
                                           for($x = 0; $x <= $k;  $x++) {
                                    echo "<tr id='order-list'>"
                                     . "<td>".$i."</td>"
-                                           . "<td>" .$orderproductid[$x]."</td>"
+                                           
                                            . "<td>" .$orderid[$x]."</td>"
                                            . "<td>". $customerName[$x]. "</td>"
                                            . "<td>". $pickupAddress[$x]. "</td>"
