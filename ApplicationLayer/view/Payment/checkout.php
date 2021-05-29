@@ -37,9 +37,29 @@ if(isset($_POST['add'])){
 
 }
 
+//if payment method successful
+//if(isset($_POST['Your Payment Is Successfully']))
+//{
+  //$customer = $customer->checkout();
+    
+
+//}
+
+//Payment Success
+//$customer ->buttonCheckout = $_POST['buttonCheckout']
+//if ($customer ->buttonCheckout()) {
+  //echo"<script type='text/javascript'>alert('Your Payment Is Successfully!!');
+ // window.location = './checkout.php?buttonCheckout'= "$_SESSION['buttonCheckout'],";</script>";
+//}
+
+
+
+
+
 // if paypal payment success
 if($_SESSION['status'] == 'success'){
     echo "hello";
+
 
     $product->addOrder($CustID);
 
@@ -67,7 +87,8 @@ if($_SESSION['status'] == 'success'){
       $product->addOrderProduct($OrderID,$i);
       echo "ORDER ADDED";
 
-    }
+    }else echo"<script type='text/javascript'>alert('Your Payment Is Successfully!!');
+     window.location = './checkout.php?buttonCheckout'= "$_SESSION['buttonCheckout'],";</script>";
 
     unset($_SESSION['status']);
     unset($_SESSION['quantity']);
@@ -161,10 +182,11 @@ if($_SESSION['status'] == 'success'){
              var ul = document.querySelector('#list-product');
              var totalAll = 0;
              let total = 0;
-             let shipping = 0;
+             var totalQuantity = 0;
+
 
              products.forEach((product, index) => {
-               let total = parseFloat(products[index].ProductPrice) * Number(products[index].quantity)
+               let total = parseFloat(products[index].ProductPrice) * Number(products[index].quantity);
                total = parseFloat(total).toFixed(2);
 
                ul.innerHTML += `
@@ -178,8 +200,12 @@ if($_SESSION['status'] == 'success'){
                  <span class="text-muted">RM ${total}</span>
                </li>`;
 
-               shipping = 5 * Number(products.length);
+               //shipping = 5 * Number(products.length);
+               //if Number(products.length) > 5 {
+               //shipping * 0
+               //};
 
+               totalQuantity += Number(products[index].quantity);
                totalAll += parseFloat(products[index].ProductPrice) * Number(products[index].quantity);
 
              });
@@ -191,6 +217,10 @@ if($_SESSION['status'] == 'success'){
              <strong id="shippingFee"></strong>
            </li>
            <li class="list-group-item d-flex justify-content-between">
+             <span>Number product</span>
+             <strong id="numbers"></strong>
+           </li>
+           <li class="list-group-item d-flex justify-content-between">
              <span>Total (RM)</span>
              <strong id="total"></strong>
            </li>
@@ -198,11 +228,25 @@ if($_SESSION['status'] == 'success'){
          </ul>
 
         <script>
-
-          document.getElementById('total').innerHTML = 'RM '+parseFloat(totalAll + shipping).toFixed(2)+'';
-          document.getElementById('shippingFee').innerHTML = 'RM '+parseFloat(shipping).toFixed(2)+'';
+          if (totalQuantity>5) 
+          {
+             let shipping = 0;
+            document.getElementById('shippingFee').innerHTML = 'FREE SHIPPING';
+            document.getElementById('total').innerHTML = 'RM '+parseFloat(totalAll + shipping).toFixed(2)+'';
+          document.getElementById('numbers').innerHTML = totalQuantity;
           document.getElementById('totalAll').value = parseFloat(totalAll + shipping).toFixed(2);
           console.log(shipping);
+          }
+          else
+          {
+            let shipping = 5;
+            document.getElementById('shippingFee').innerHTML = 'RM '+parseFloat(shipping).toFixed(2)+'';
+            document.getElementById('total').innerHTML = 'RM '+parseFloat(totalAll + shipping).toFixed(2)+'';
+          document.getElementById('numbers').innerHTML = totalQuantity;
+          document.getElementById('totalAll').value = parseFloat(totalAll + shipping).toFixed(2);
+          console.log(shipping);
+          }
+          
 
     //       window.onload = (event) => {
     //     console.log(id);
@@ -236,6 +280,8 @@ if($_SESSION['status'] == 'success'){
              </div>
            </div>
 
+
+
            <div class="mb-3">
              <label for="address">Address</label>
              <input type="text" class="form-control" name="OrderAddress" id="OrderAddress" placeholder="1234 Main St" value="" required>
@@ -243,38 +289,42 @@ if($_SESSION['status'] == 'success'){
                Please enter your shipping address.
              </div>
            </div>
+           
 
-           <div class="mb-3">
-             <label for="phone">Phone</label>
-             <input type="number" class="form-control" name="OrderAddress" id="OrderAddress" placeholder="1234 " value="" required>
-             <div class="invalid-feedback">
-               Please enter your Phone Number.
-             </div>
-           </div>
+            <div class="mb-3">
+               <label for="PhoneNo">Phone</label>
+               <input type="text" class="form-control" id="PhoneNo" placeholder="1234" value="<?=$row['CustNo']?>" >
+               <div class="invalid-feedback">
+                 Valid phone number is required.
+               </div>
+            </div>
+           
+
 
            <hr class="mb-4">
            <hr class="mb-4">
+
 
            <h4 class="mb-3">Payment</h4>
 
            <div class="d-block my-3">
              <div class="custom-control custom-radio">
-               <input id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
-               <label class="custom-control-label" for="cod">Cash On Delivery</label>
+               <input id="cashondelivery" name="paymentMethod" type="radio" value="CashOnDelivery" class="custom-control-input" required>
+               <label class="custom-control-label" for="cashondelivery">Cash On Delivery</label>
              </div>
            </div>
            
           <div class="d-block my-3">
              <div class="custom-control custom-radio">
-               <input id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
-               <label class="custom-control-label" for="paypal">Online Banking</label>
+               <input id="onlinebanking" name="paymentMethod" type="radio" value="onlinebanking" class="custom-control-input" required>
+               <label class="custom-control-label" for="onlinebanking">Online Banking</label>
              </div>
            </div>
            
            <div class="d-block my-3">
              <div class="custom-control custom-radio">
-               <input id="paypal" name="paymentMethod" type="radio" value="Paypal" class="custom-control-input" required>
-               <label class="custom-control-label" for="paypal">Credit Card</label>
+               <input id="creditcard" name="paymentMethod" type="radio" value="creditcard" class="custom-control-input" required>
+               <label class="custom-control-label" for="creditcard">Credit Card</label>
              </div>
            </div>
            
@@ -290,6 +340,9 @@ if($_SESSION['status'] == 'success'){
                <button name="add" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
             </div>
 
+
+
+
            <?php } ?>
          </form>
        </div>
@@ -300,6 +353,10 @@ if($_SESSION['status'] == 'success'){
           document.getElementById('buttonCheckout').innerHTML =
           `<button name="add" class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>`;
         }
+
+        //if ($user ->checkout()) {
+          //echo "<script type="text">">
+        //}
         </script>
 
       <!-- FOOTER -->
