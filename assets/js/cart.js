@@ -25,6 +25,7 @@ class UI {
     <td id="total">RM ${total}</td>
     <td style="display:none;">${product.ProductID}</td>
     <td><a href="#" class="btn btn-danger btn-sm delete">X</td>
+    <td><a href="#" class="fa fa-edit style="font-size:40px;color:blue edit"></td>
     `;
 
     list.appendChild(row);
@@ -35,6 +36,12 @@ class UI {
       el.parentElement.parentElement.remove();
     }
 
+  }
+
+  static editProdut(ed){
+    if(ed.classList.contains('edit')) {
+      ed.parentElement.parentElement.remove();
+    }
   }
 
   static showAlert(message, className) {

@@ -65,12 +65,13 @@ require_once '../../../libs/custSession.php';
                             <th width="3%">Quantity</th>
                             <th width="7%">Price</th>
                             <th width="7%">Total</th>
-                            <th width="7%"></th>
+                            <th width="3%"></th>
+                            <th width="3%"></th>
                             </tr>
                           </thead>
                           <tbody id="product-list"></tbody>
                           <tr>
-                            <td colspan="4" align="right">Total</td>
+                            <td colspan="5" align="right">Total</td>
                             <td id="totalAll" align="right"></td>
                           </tr>
                         </table>
