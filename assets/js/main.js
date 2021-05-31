@@ -33,25 +33,22 @@ $('.product-bottom h4').each(function(){
 });
 
 // search customer product list
-function search(category){
-  var term = $('#term').val();
-  console.log(term)
-  if(category !== ''){
-    console.log(term)
-    window.location.href = 'productList.php?category='+ category +'&term=' + term;
-  }else{
-    window.location.href = 'productList.php?&term=' + term;
-  }
-}
-
-function search2(category){
-  var term = $('#term2').val();
-  console.log(term)
-  if(category !== ''){
-    console.log(term)
-    window.location.href = 'productList.php?category='+ category +'&term=' + term;
-  }else{
-    window.location.href = 'productList.php?&term=' + term;
+function myFunction() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("myInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[0];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
   }
 }
 
