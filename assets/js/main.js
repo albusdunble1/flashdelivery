@@ -33,6 +33,30 @@ $('.product-bottom h4').each(function(){
 });
 
 // search customer product list
+function search(category){
+  var term = $('#term').val();
+  console.log(term)
+  if(category !== ''){
+    console.log(term)
+    window.location.href = 'productList.php?category='+ category +'&term=' + term;
+  }else{
+    window.location.href = 'productList.php?&term=' + term;
+  }
+}
+
+function search2(category){
+  var term = $('#term2').val();
+  console.log(term)
+  if(category !== ''){
+    console.log(term)
+    window.location.href = 'productList.php?category='+ category +'&term=' + term;
+  }else{
+    window.location.href = 'productList.php?&term=' + term;
+  }
+}
+
+
+
 function myFunction() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("myInput");
