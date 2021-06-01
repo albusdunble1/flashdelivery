@@ -33,17 +33,52 @@ if(isset($_POST['add'])){
       $_SESSION['total'] = $_POST['total'];
        if($payment == 'Paypal'){
       header("Location: ../../../libs/paypal/charge.php");
+    }//else(payment == 'cash on CashOnDelivery'){
+      //header("echo "<script type='text/javascript'>alert('Your payment is successfully!!!'));
+    //}
+
+}
+
+//if payment method cash on delivery
+if(isset($_POST['add'])){
+      $payment = $_POST['paymentMethod'];
+      $_SESSION['quantity'] = $_POST['quantity'];
+      $_SESSION['ProductID'] = $_POST['ProductID'];
+      $_SESSION['OrderAddress'] = $_POST['OrderAddress'];
+      $_SESSION['total'] = $_POST['total'];
+       if($payment == 'CashOnDelivery'){
+      echo 'Your Payment Is Successfully Using Cash On Delivery';
+      
+ 
     }
 
 }
 
-//if payment method successful
-//if(isset($_POST['Your Payment Is Successfully']))
-//{
-  //$customer = $customer->checkout();
-    
+//if payment method online banking
+if(isset($_POST['add'])){
+      $payment = $_POST['paymentMethod'];
+      $_SESSION['quantity'] = $_POST['quantity'];
+      $_SESSION['ProductID'] = $_POST['ProductID'];
+      $_SESSION['OrderAddress'] = $_POST['OrderAddress'];
+      $_SESSION['total'] = $_POST['total'];
+       if($payment == 'OnlineBanking'){
+      echo 'Your Payment Is Successfully Using Online Banking'; 
+    }
 
-//}
+}
+
+//if payment method Credit Card
+if(isset($_POST['add'])){
+      $payment = $_POST['paymentMethod'];
+      $_SESSION['quantity'] = $_POST['quantity'];
+      $_SESSION['ProductID'] = $_POST['ProductID'];
+      $_SESSION['OrderAddress'] = $_POST['OrderAddress'];
+      $_SESSION['total'] = $_POST['total'];
+       if($payment == 'CreditCard'){
+      echo 'Your Payment Is Successfully Using Credit Card'; 
+    }
+
+}
 
 //Payment Success
 //$customer ->buttonCheckout = $_POST['buttonCheckout']
@@ -87,8 +122,9 @@ if($_SESSION['status'] == 'success'){
       $product->addOrderProduct($OrderID,$i);
       echo "ORDER ADDED";
 
-    }else echo"<script type='text/javascript'>alert('Your Payment Is Successfully!!');
-     window.location = './checkout.php?buttonCheckout'= "$_SESSION['buttonCheckout'],";</script>";
+    }
+    //else echo"<script type='text/javascript'>alert('Your Payment Is Successfully!!');
+    //window.location = './checkout.php?buttonCheckout'= "$_SESSION['buttonCheckout'],";</script>";
 
     unset($_SESSION['status']);
     unset($_SESSION['quantity']);
@@ -316,14 +352,14 @@ if($_SESSION['status'] == 'success'){
            
           <div class="d-block my-3">
              <div class="custom-control custom-radio">
-               <input id="onlinebanking" name="paymentMethod" type="radio" value="onlinebanking" class="custom-control-input" required>
+               <input id="onlinebanking" name="paymentMethod" type="radio" value="OnlineBanking" class="custom-control-input" required>
                <label class="custom-control-label" for="onlinebanking">Online Banking</label>
              </div>
            </div>
            
            <div class="d-block my-3">
              <div class="custom-control custom-radio">
-               <input id="creditcard" name="paymentMethod" type="radio" value="creditcard" class="custom-control-input" required>
+               <input id="creditcard" name="paymentMethod" type="radio" value="CreditCard" class="custom-control-input" required>
                <label class="custom-control-label" for="creditcard">Credit Card</label>
              </div>
            </div>
