@@ -77,8 +77,9 @@ $pages_needed = ceil($total / $number_of_records);
         <!-- BUYERS LIST -->
 
         <input id="myInput" onkeyup="myFunction()" type="text" placeholder="Search..">
-        <br><br><br>
-        <table class="table">
+        <br><br>
+
+        <table class="table" id="myTable">
             <thead class="thead-dark">
                 <tr>
                     <th scope="col">No</th>
